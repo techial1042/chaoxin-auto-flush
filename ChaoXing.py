@@ -86,26 +86,22 @@ class ChaoXing:
 
             status_json = self.__get_play_status(object_id)
             params = self.get_params(attachment['jobid'], attachment['property']['objectid'], 0,
-                                     status_json['duration'], None, None, attachment['otherInfo'], None)
-
+                                     status_json['duration'], None, None, attachment['otherInfo'], None, 0)
             audio_play = self.session.get(
                 url='https://mooc1-1.chaoxing.com/multimedia/log/a/{}/{}'.format(cpi, status_json['dtoken']),
                 params=params)
 
-            print('boom start, object_id: {}, params: {}'.format(object_id, params))
-            print('boom start result {}'.format(audio_play.text))
-
-            time.sleep(random.randint(3, 10))
-
+            print('boom, object_id: {}, params: {}'.format(object_id, params))
+            print('boom, result {}'.format(audio_play.text))
+            status_json = self.__get_play_status(object_id)
             params = self.get_params(attachment['jobid'], attachment['property']['objectid'], status_json['duration'],
-                                     status_json['duration'], None, None, attachment['otherInfo'], None)
-
+                                     status_json['duration'], None, None, attachment['otherInfo'], None, 4)
             audio_play = self.session.get(
                 url='https://mooc1-1.chaoxing.com/multimedia/log/a/{}/{}'.format(cpi, status_json['dtoken']),
                 params=params)
 
-            print('boom end, object_id: {}, params: {}'.format(object_id, params))
-            print('boom end result {}'.format(audio_play.text))
+            print('boom, object_id: {}, params: {}'.format(object_id, params))
+            print('boom, result {}'.format(audio_play.text))
 
             time.sleep(random.randint(3, 10))
 
@@ -116,12 +112,8 @@ class ChaoXing:
         return status.json()
 
     def get_params(self, job_id: str, object_id: str, playing_time: int, duration: int, start_time, end_time,
-                   other_info, rt):
+                   other_info, rt, is_drag):
         clip_time = ChaoXing.__get_clip_time(duration, start_time, end_time)
-        if playing_time < duration:
-            isdrap = 0
-        else:
-            isdrap = duration // 60
         view = 'pc'
         enc = self.__get_enc(job_id, object_id, playing_time, duration, start_time, end_time)
         dtype = 'Audio'
@@ -136,7 +128,7 @@ class ChaoXing:
             'otherInfo': other_info,
             'jobid': job_id,
             'userid': self.user_id,
-            'isdrag': isdrap,
+            'isdrag': is_drag,
             'view': view,
             'enc': enc,
             'rt': rt,
