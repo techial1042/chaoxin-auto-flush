@@ -111,6 +111,9 @@ class ChaoXing:
 
             print('boom, object_id: {}, params: {}'.format(object_id, params))
             print('boom, result {}'.format(audio_play.text))
+
+            time.sleep(random.randint(20, 60))
+
             status_json = self.__get_play_status(object_id)
             params = self.__get_params(attachment['jobid'], attachment['property']['objectid'], status_json['duration'],
                                        status_json['duration'], None, None, attachment['otherInfo'], None, 4)
@@ -121,7 +124,7 @@ class ChaoXing:
             print('boom, object_id: {}, params: {}'.format(object_id, params))
             print('boom, result {}'.format(audio_play.text))
 
-            time.sleep(random.randint(3, 10))
+            time.sleep(random.randint(20, 60))
 
     def __get_play_status(self, object_id):
         """

@@ -39,3 +39,8 @@ if __name__ == '__main__':
 python main.py
 ```
 
+
+## TODO
+
+-[ ] 允许自定义 sleep 时长
+-[ ] 异常处理
